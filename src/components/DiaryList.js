@@ -1,4 +1,6 @@
 import { useState } from 'react';
+import { useNavigate } from 'react-router-dom';
+import MyButton from './MyButton';
 
 const sortOptionList = [
     {value:'latest', name: '최신순'},
@@ -22,6 +24,7 @@ const ControlMenu = ({value,onChange,optionList}) => {
 };
 
 const DiaryList = ({diaryList}) => {
+    const navigate = useNavigate(); //페이지 이동
     const [sortType,setSortType] = useState('latest');
     const [filter, setFilter] = useState('all');
     //감정 점수에 따른 정렬
@@ -41,7 +44,7 @@ const DiaryList = ({diaryList}) => {
                 return parseInt(a.date) - parseInt(b.date)
             }
         }
-        
+
         const copyList = JSON.parse(JSON.stringify(diaryList));
         const filteredList = filter === 'all' ? copyList : copyList.filter((it)=>filterCallBack(it));
         const sortedList = filteredList.sort(compare);
@@ -60,6 +63,11 @@ const DiaryList = ({diaryList}) => {
              value = {filter}
              onChange = {setFilter}
              optionList = {filterOptionList}
+            />
+            <MyButton 
+             text={'새 일기 쓰기'} 
+             onClick={()=>navigate('/New')} 
+             type = {'POSITIVE'}
             />
             {getProcessedList().map((it)=>
             <div key={it.id}>{it.content} {it.emotion}</div>
