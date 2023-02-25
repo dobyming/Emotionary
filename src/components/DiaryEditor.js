@@ -66,6 +66,7 @@ const DiaryEditor = ({isEdit,originData}) => {
     const handleClickEmotion = (emotion) => {
         setEmotion(emotion);
     };
+    
     const handleSubmit = () => {
         if(content.length < 1) {
             contentRef.current.focus();
@@ -78,7 +79,6 @@ const DiaryEditor = ({isEdit,originData}) => {
                 onEdit(originData.id,date,content,emotion);
             }
         }
-        
         navigate('/',{replace:true})
     }
 
