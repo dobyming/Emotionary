@@ -1,55 +1,13 @@
 import { useNavigate } from "react-router-dom";
-import { useState,useRef,useContext } from 'react';
+import { useState,useRef,useContext,useEffect } from 'react';
+import { DiaryDispatchContext } from "./../App";
 
 import MyHeader from "./MyHeader";
 import MyButton from "./MyButton";
 import EmotionItem from "./EmotionItem";
-import { DiaryDispatchContext } from "./../App";
-import { useEffect } from 'react';
+import { getStringDate } from "../util/date";
+import { emotionList } from "../util/emotion";
 
-const emotionList = [
-    {
-        emotion_id : 1,
-        emotion_img : process.env.PUBLIC_URL + `/assets/emotion1.png`,
-        emotion_descript: '완전 좋음'
-    },
-    {
-        emotion_id : 2,
-        emotion_img : process.env.PUBLIC_URL + `/assets/emotion2.png`,
-        emotion_descript: '좋음'
-    },
-    {
-        emotion_id : 3,
-        emotion_img : process.env.PUBLIC_URL + `/assets/emotion3.png`,
-        emotion_descript: '보통'
-    },
-    {
-        emotion_id : 4,
-        emotion_img : process.env.PUBLIC_URL + `/assets/emotion4.png`,
-        emotion_descript: '안좋음'
-    },
-    {
-        emotion_id : 5,
-        emotion_img : process.env.PUBLIC_URL + `/assets/emotion5.png`,
-        emotion_descript: '완전 안좋음'
-    }
-];
-
-const getStringDate = (date) => {
-    let year = date.getFullYear();
-    let month = date.getMonth() + 1;
-    let day = date.getDate();
-  
-    if (month < 10) {
-      month = `0${month}`;
-    }
-  
-    if (day < 10) {
-      day = `0${day}`;
-    }
-  
-    return `${year}-${month}-${day}`;
-};
 
 const DiaryEditor = ({isEdit,originData}) => {
     const {onCreate,onEdit} = useContext(DiaryDispatchContext);
