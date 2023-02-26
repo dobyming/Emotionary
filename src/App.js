@@ -80,7 +80,6 @@ function App() {
     setTheme((cur) => (cur === "light" ? "dark" : "light"));
   };
 
-
   // CREATE
   const onCreate = (date,content,emotion) => {
     dispatch({
