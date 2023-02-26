@@ -29,7 +29,7 @@ const Diary = () => {
     if(!showData) {
         return <div className='DiaryPage'>로딩중..</div>
     } else {
-        const curEmotion = emotionList.find((it)=>parseInt(it.emotion_id) === parseInt(showData.emotion))
+        const curEmotion = emotionList.find((it)=>parseInt(it.emotion_id) === parseInt(showData.emotion));
         return(
             <div className="DiaryPage">
                 <MyHeader headText ={`${getStringDate(new Date(parseInt(showData.date)))} 기록`}
