@@ -1,6 +1,7 @@
 import { useParams,useNavigate } from 'react-router-dom';
 import { useContext, useState,useEffect } from 'react';
-import { DiaryStateContext } from "../App";
+import { DiaryStateContext,ThemeContext } from "../App";
+
 import MyHeader from "../components/MyHeader";
 import MyButton from '../components/MyButton';
 
@@ -13,6 +14,7 @@ const Diary = () => {
     const navigate = useNavigate();
     const {id} = useParams();
     const diaryList = useContext(DiaryStateContext); 
+    const themeColor = useContext(ThemeContext);
 
     useEffect(()=>{
         if(diaryList.length >= 1) {
@@ -38,14 +40,14 @@ const Diary = () => {
                 />
                 <article>
                     <section>
-                        <h4>오늘의 감정</h4>
+                        <h4 id={themeColor.theme}>오늘의 감정</h4>
                         <div className={['diary_img_wrapper',`diary_img_wrapper_${showData.emotion}`].join(" ")}>
                             <img src = {curEmotion.emotion_img}/>
                             <div className='emotion_descript'>{curEmotion.emotion_descript}</div>
                         </div>
                     </section>
                     <section>
-                        <h4>오늘의 일기</h4>
+                        <h4 id={themeColor.theme}>오늘의 일기</h4>
                         <div className='diary_content_wrapper'>    
                             <p>{showData.content}</p>
                         </div>
