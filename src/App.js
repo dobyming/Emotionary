@@ -1,10 +1,13 @@
-import React, { useReducer,useRef } from 'react';
-import './App.css';
+import React, { createContext, useReducer,useRef,useState } from 'react';
+import Switch from "react-switch";
 import { BrowserRouter, Routes, Route } from 'react-router-dom';
+import './App.css';
 import Home from './pages/Home';
 import Edit from './pages/Edit';
 import Diary from './pages/Diary';
 import New from './pages/New';
+
+export const ThemeContext = createContext(null);
 
 const reducer = (state, action) => {
   let newState = [];
@@ -70,9 +73,15 @@ const dummyData = [
 ]
 
 function App() {
-  const [data, dispatch] = useReducer(reducer, dummyData); // 상태관리
-  
   const dataId = useRef(0);
+  const [data, dispatch] = useReducer(reducer, dummyData); // 상태관리
+  const [theme,setTheme] = useState("dark");
+
+  const toggleTheme = () => {
+    setTheme((cur) => (cur === "light" ? "dark" : "light"));
+  };
+
+
   // CREATE
   const onCreate = (date,content,emotion) => {
     dispatch({
@@ -106,21 +115,30 @@ function App() {
   };
 
   return (
-    <DiaryStateContext.Provider value = {data}>
-      <DiaryDispatchContext.Provider value={{onCreate,onEdit,onRemove}}>
-        <BrowserRouter>
-          <div className="App">
-            <Routes>
-              <Route path="/" element={<Home />} />
-              <Route path="/new" element={<New />} />
-              <Route path="/edit/:id" element={<Edit />} />
-              <Route path="/diary/:id" element={<Diary />} 
-              />
-            </Routes>
-          </div>
-        </BrowserRouter>
-      </DiaryDispatchContext.Provider>
-    </DiaryStateContext.Provider>
+    <ThemeContext.Provider value = {{theme,toggleTheme}}>
+      <DiaryStateContext.Provider value = {data}>
+        <DiaryDispatchContext.Provider value={{onCreate,onEdit,onRemove}}>
+          <BrowserRouter>
+            <div className="App" id={theme}>
+              <Routes>
+                <Route path="/" element={<Home />} />
+                <Route path="/new" element={<New />} />
+                <Route path="/edit/:id" element={<Edit />} />
+                <Route path="/diary/:id" element={<Diary />} 
+                />
+              </Routes>
+              <div className='switch-wrapper'>
+                <label className="switch">
+                  <input type="checkbox" onChange={toggleTheme} checked={theme==="dark"}/>
+                  <span className="slider round"></span>
+                </label>
+              </div>
+            </div>
+          </BrowserRouter>
+        </DiaryDispatchContext.Provider>
+      </DiaryStateContext.Provider>
+    </ThemeContext.Provider>
+
   );
 }
 

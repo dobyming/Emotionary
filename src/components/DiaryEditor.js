@@ -1,6 +1,6 @@
 import { useNavigate } from "react-router-dom";
 import { useState,useRef,useContext,useEffect } from 'react';
-import { DiaryDispatchContext } from "./../App";
+import { DiaryDispatchContext,ThemeContext } from "./../App";
 
 import MyHeader from "./MyHeader";
 import MyButton from "./MyButton";
@@ -11,6 +11,7 @@ import { emotionList } from "../util/emotion";
 
 const DiaryEditor = ({isEdit,originData}) => {
     const {onCreate,onEdit} = useContext(DiaryDispatchContext);
+    const themeColor = useContext(ThemeContext);
     const navigate = useNavigate();
     const contentRef = useRef();
 
@@ -56,7 +57,7 @@ const DiaryEditor = ({isEdit,originData}) => {
             />
             <div>
                 <section>
-                    <h4>오늘은 언제인가요?</h4>
+                    <h4 id={themeColor.theme}>오늘은 언제인가요?</h4>
                     <div className="input_box">
                         <input 
                         className="input_date"
@@ -64,7 +65,7 @@ const DiaryEditor = ({isEdit,originData}) => {
                     </div>
                 </section>
                 <section>
-                    <h4>오늘의 감정</h4>
+                    <h4 id={themeColor.theme}>오늘의 감정</h4>
                     <div className="input_box emotion_list_wrapper">
                         {emotionList.map((it)=>
                          <EmotionItem 
@@ -76,7 +77,7 @@ const DiaryEditor = ({isEdit,originData}) => {
                     </div>
                 </section>
                 <section>
-                    <h4>오늘의 일기</h4>
+                    <h4 id={themeColor.theme}>오늘의 일기</h4>
                     <div className="input_box text_wrapper">
                         <textarea 
                          placeholder="오늘은 어땠나요?"
