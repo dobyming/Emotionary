@@ -5,6 +5,7 @@ import Home from './pages/Home';
 import Edit from './pages/Edit';
 import Diary from './pages/Diary';
 import New from './pages/New';
+import { useEffect } from 'react';
 
 export const ThemeContext = createContext(null);
 
@@ -32,48 +33,27 @@ const reducer = (state, action) => {
     default:
       return state;
   }
+  localStorage.setItem('diary',JSON.stringify(newState));
   return newState;
 };
 
 export const DiaryStateContext = React.createContext();
 export const DiaryDispatchContext = React.createContext();
 
-const dummyData = [
-  {
-    id:1,
-    emotion:1,
-    content: '오늘의 일기 1번',
-    date : 1676960500416
-  },
-  {
-    id:2,
-    emotion:2,
-    content: '오늘의 일기 2번',
-    date : 1676960500417
-  },
-  {
-    id:3,
-    emotion:3,
-    content: '오늘의 일기 3번',
-    date : 1676960500418
-  },
-  {
-    id:4,
-    emotion:4,
-    content: '오늘의 일기 4번',
-    date : 1676960500419
-  },
-  {
-    id:5,
-    emotion:5,
-    content: '오늘의 일기 5번',
-    date : 1676960500420
-  },
-]
 
 function App() {
+  const [data, dispatch] = useReducer(reducer, []); // 상태관리
+
+  useEffect(()=>{
+    const localData = localStorage.getItem('diary');
+    if (localData) {
+      const diaryList = JSON.parse(localData).sort((a,b) => parseInt(b.id) - parseInt(a.id));
+      dataId.current = parseInt(diaryList[0].id) + 1;
+      dispatch({type:'INIT',data:diaryList});
+    }
+  },[]);
+
   const dataId = useRef(0);
-  const [data, dispatch] = useReducer(reducer, dummyData); // 상태관리
   const [theme,setTheme] = useState("light");
 
   const toggleTheme = () => {
