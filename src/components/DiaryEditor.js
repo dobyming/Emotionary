@@ -7,6 +7,7 @@ import MyButton from "./MyButton";
 import EmotionItem from "./EmotionItem";
 import { getStringDate } from "../util/date";
 import { emotionList } from "../util/emotion";
+import { useCallback } from "react";
 
 
 const DiaryEditor = ({isEdit,originData}) => {
@@ -22,9 +23,9 @@ const DiaryEditor = ({isEdit,originData}) => {
     // 일기 작성 state
     const [content, setContent] = useState("");
 
-    const handleClickEmotion = (emotion) => {
+    const handleClickEmotion = useCallback((emotion) => {
         setEmotion(emotion);
-    };
+    },[]);
     
     const handleSubmit = () => {
         if(content.length < 1) {
