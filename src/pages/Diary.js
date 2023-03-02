@@ -18,7 +18,7 @@ const Diary = () => {
 
     useEffect(()=>{
         const titleElement = document.getElementsByTagName("title")[0];
-        titleElement.innerHTML = `Emotionary - ${id}번 일기`;
+        titleElement.innerHTML = `Emotionary - ${parseInt(id)+1}번 일기`;
     },[]);
 
     useEffect(()=>{

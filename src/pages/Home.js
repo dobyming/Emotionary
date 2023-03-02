@@ -12,7 +12,12 @@ const Home = () => {
     const [curDate,setCurDate] = useState(new Date());
     const headText = `${curDate.getFullYear()}년 ${curDate.getMonth()+1}월`
     
-    //월초~월말 사이에 있는지 validate
+    useEffect(()=>{
+        const titleElement = document.getElementsByTagName("title")[0];
+        titleElement.innerHTML = `Emotionary`;
+      },[]);
+    
+      //월초~월말 사이에 있는지 validate
     useEffect(()=>{
         if (diaryList.length >=1){
             const initDay = new Date(
