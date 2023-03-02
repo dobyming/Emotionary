@@ -24,7 +24,10 @@ const Home = () => {
             const lastDay = new Date(
                 curDate.getFullYear(),
                 curDate.getMonth()+1,
-                0
+                0,
+                23,
+                59,
+                59
             ).getTime(); //월말
 
             setData(diaryList.filter((it)=> initDay <= it.date && it.date <= lastDay));

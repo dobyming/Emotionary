@@ -74,7 +74,7 @@ const dummyData = [
 function App() {
   const dataId = useRef(0);
   const [data, dispatch] = useReducer(reducer, dummyData); // 상태관리
-  const [theme,setTheme] = useState("dark");
+  const [theme,setTheme] = useState("light");
 
   const toggleTheme = () => {
     setTheme((cur) => (cur === "light" ? "dark" : "light"));
